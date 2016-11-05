@@ -83,13 +83,13 @@ class LGoBoard:
     cellstr = ''    # then print cell contents
     for c in self.b:  
       cellstr += '  ' + c
-    print sizestr + '\n' + indexstr + '\n' + cellstr
+    print(sizestr + '\n' + indexstr + '\n' + cellstr)
 
     for ptm in range(2):
-      print '\nlegal ' + self.stone[ptm] + ' ',
+      print('\nlegal ' + self.stone[ptm] + ' ', end='')
       for j in range(2+self.n):
-        if self.isLegalMove(j,ptm): print j,
-    print ''
+        if self.isLegalMove(j,ptm): print(j, end='')
+    print('')
 
 #def showHistory(h):
   #for j in range(len(h)):
@@ -97,9 +97,9 @@ class LGoBoard:
     #showBoard(h[j])
 
 def getCommand(color):
-  print '\n ' + color + '  cell ',
+  print('\n ' + color + '  cell ', end='')
   line = sys.stdin.readline()
-  print ''
+  print('')
   if line[0] == '\n': 
     return -2 # end game
   elif not line.split()[0].isdigit(): 
@@ -112,18 +112,18 @@ def playGame(board):
   while True:
     m = getCommand(board.stone[ptm])
     if   m == -2: break
-    elif m == -1: print 'sorry ? ... try again'
+    elif m == -1: print('sorry ? ... ')
     elif m ==  0: 
-      print 'pass\n'
+      print('pass\n')
       ptm = 1 - ptm
-    elif m > board.n: print 'out of bounds'
+    elif m > board.n: print('out of bounds')
     elif not board.isLegalMove(m,ptm): 
-      print ' illegal ... try again\n'
+      print(' illegal ... try again\n')
     else: 
       board.makeLegalMove(m,ptm)
       ptm = 1 - ptm
     board.show()
-  print '  adios ...'
+  print('  adios ... sayonara ... annyeong ... zaijian ...\n')
 
 brd = LGoBoard(6)
 brd.show()
