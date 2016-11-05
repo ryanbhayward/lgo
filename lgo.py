@@ -8,8 +8,9 @@ class LGoBoard:
     self.Black, self.White, self.Empty, self.Edge = range(4)
     self.stone = '*o-%'  # black white empty edge
     self.n = numcells
+    # board as string
     self.b =  self.stone[self.Edge]\
-           + self.stone[self.Empty] * numcells + self.stone[self.Edge]
+            + self.stone[self.Empty] * numcells + self.stone[self.Edge]
     # for locations of cells that are left-end or right-end of a group,
     #   the number of cells in that group
     self.size = [1] * (numcells+2)
@@ -46,20 +47,20 @@ class LGoBoard:
     return self.isEmpty(psn+self.size[psn+1])
 
   def leftCapture(self, psn, color): # move will capture left group ?
-    return (self.b[psn-1] == self.stone[1-color] and \
+    return (self.b[psn-1] == self.stone[1-color] and
        not self.isEmpty(psn-(1+self.size[psn-1])))
 
   def rightCapture(self, psn, color): # move will capture right group ?
-    return (self.b[psn+1] == self.stone[1-color] and \
+    return (self.b[psn+1] == self.stone[1-color] and
        not self.isEmpty(psn+(1+self.size[psn+1])))
   
   def isLegalMove(self, psn, color):
-    return self.isEmpty(psn) and (\
-      self.isEmpty(psn-1) or self.isEmpty(psn+1) or\
-      (self.b[psn-1] == self.stone[color] and \
-       self.isEmpty(psn-(1+self.size[psn-1]))) or\
-      (self.b[psn+1] == self.stone[color] and \
-       self.isEmpty(psn+1+self.size[psn+1])) or\
+    return self.isEmpty(psn) and (
+      self.isEmpty(psn-1) or self.isEmpty(psn+1) or
+      (self.b[psn-1] == self.stone[color] and
+       self.isEmpty(psn-(1+self.size[psn-1]))) or
+      (self.b[psn+1] == self.stone[color] and
+       self.isEmpty(psn+1+self.size[psn+1])) or
        self.leftCapture(psn,color) or
        self.rightCapture(psn,color) )
 
@@ -110,6 +111,7 @@ def getCommand(color):
 def playGame(board):
   ptm = board.Black # player to move: 1st player
   while True:
+    board.show()
     m = getCommand(board.stone[ptm])
     if   m == -2: break
     elif m == -1: print('sorry ? ... ')
@@ -122,9 +124,7 @@ def playGame(board):
     else: 
       board.makeLegalMove(m,ptm)
       ptm = 1 - ptm
-    board.show()
   print('  adios ... sayonara ... annyeong ... zaijian ...\n')
 
-brd = LGoBoard(6)
-brd.show()
+brd = LGoBoard(4)
 playGame(brd)
